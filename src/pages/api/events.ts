@@ -10,10 +10,10 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   try {
-    const data = await fetch("https://w3e.ai/backend/events/singapore")
+    const data = await fetch("https://w3e.ai/backend/events/singapore?limit=500")
     const events = (await data.json()).result;
     const metacampEvents = await events.filter(
-      (event: { organizer_name: string; }) => event.organizer_name.toLowerCase() === "metacamp"
+      (event: { organizer_name: string; }) => event.organizer_name.toLowerCase().includes("metacamp")
     );
     res.status(200).json(metacampEvents);
   } catch (err) {
